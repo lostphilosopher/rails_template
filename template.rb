@@ -35,8 +35,8 @@ after_bundle do
 
   console_puts('Converting assets for Bootstrap.')
 	run "rm app/assets/stylesheets/application.css"
-  copy_file 'application.scss' 'app/assets/stylesheets/application.scss'
-  copy_file 'application.js' 'app/assets/javascript/application.js'
+  copy_file 'application.scss', 'app/assets/stylesheets/application.scss'
+  copy_file 'application.js', 'app/assets/javascript/application.js'
 
   console_puts('Creating the database.')
   rails_command "db:create"
