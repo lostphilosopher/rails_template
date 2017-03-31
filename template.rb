@@ -34,7 +34,6 @@ after_bundle do
 	run "rm app/views/layouts/application.html.erb"
 
   console_puts('Converting assets for Bootstrap.')
-	run "pwd"
   run "rm app/assets/stylesheets/application.css"
   run "rm app/assets/javascript/application.js"
   run "cp ../application.scss app/assets/stylesheets/application.scss"
