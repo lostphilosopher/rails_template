@@ -36,8 +36,8 @@ after_bundle do
   console_puts('Converting assets for Bootstrap.')
 	run "pwd"
   run "rm app/assets/stylesheets/application.css"
-  run "cp application.scss app/assets/stylesheets/application.scss"
-  run "cp application.js app/assets/javascript/application.js"
+  run "cp ../application.scss app/assets/stylesheets/application.scss"
+  run "cp ../application.js app/assets/javascript/application.js"
 
   console_puts('Creating the database.')
   rails_command "db:create"
