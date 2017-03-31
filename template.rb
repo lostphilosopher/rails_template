@@ -38,7 +38,7 @@ after_bundle do
   run "rm app/assets/stylesheets/application.css"
   run "rm app/assets/javascript/application.js"
   run "cp ../application.scss app/assets/stylesheets/application.scss"
-  run "cp ../application.js app/assets/javascript/application.js"
+  run "cp ../application.js app/assets/javascripts/application.js"
 
   console_puts('Creating the database.')
   rails_command "db:create"
