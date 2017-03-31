@@ -21,10 +21,6 @@ end
 console_puts('Running bundle install.')
 run "bundle install"
 
-def source_paths
-  [File.expand_path(File.dirname(__FILE__))]
-end
-
 after_bundle do
   console_puts('Installing RSpec.')
   generate "rspec:install"
@@ -35,8 +31,9 @@ after_bundle do
 
   console_puts('Converting assets for Bootstrap.')
 	run "rm app/assets/stylesheets/application.css"
-  copy_file 'application.scss', 'app/assets/stylesheets/application.scss'
-  copy_file 'application.js', 'app/assets/javascript/application.js'
+  source_root File.expand_path("../", __FILE__)
+  copy_file 'application.scss', "app/assets/stylesheets/#{file_name}.scss"
+  copy_file 'application.js', "app/assets/javascript/#{file_name}.js"
 
   console_puts('Creating the database.')
   rails_command "db:create"
