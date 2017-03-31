@@ -29,8 +29,10 @@ after_bundle do
   generate "haml:application_layout convert"
 	run "rm app/views/layouts/application.html.erb"
 
-  console_puts('Converting app/assets/stylesheets/application.css to SCSS.')
-	run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.scss"
+  console_puts('Converting assets for Bootstrap.')
+	run "rm app/assets/stylesheets/application.css"
+  run "cp application.scss app/assets/stylesheets/application.scss"
+  run "cp application.js app/assets/javascript/application.js"
 
   console_puts('Creating the database.')
   rails_command "db:create"
