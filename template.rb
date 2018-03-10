@@ -24,7 +24,7 @@ if yes?("Add Devise?")
   run "bundle install"
   run "rails generate devise:install"
   run "rails generate devise User"
-  inject_into_file 'config/environments/development.rb', before: "  end" do
+  inject_into_file 'config/environments/development.rb', before: "end" do
     "\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }\n\n"
   end
 end
@@ -33,7 +33,7 @@ console_puts('Running bundle install.')
 run "bundle install"
 
 inject_into_file 'config/application.rb', before: "  end" do
-  "\n    config.generators.assets = false\n\nconfig.generators.helper = false\n\nnconfig.generators.stylesheets = false"
+  "\n    config.generators.assets = false \n\n config.generators.helper = false \n\n config.generators.stylesheets = false \n\n"
 end
 
 def source_paths
