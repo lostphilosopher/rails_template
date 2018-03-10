@@ -18,8 +18,23 @@ gem_group :development, :test do
   gem 'pry-rails', '~> 0.3.6'
 end
 
+console_puts('Option: Devise')
+if yes?("Add Devise?")
+  gem 'devise', '~> 4.4.1'
+  run "bundle install"
+  run "rails generate devise:install"
+  run "rails generate devise User"
+  inject_into_file 'config/environments/development.rb', before: "  end" do
+    "\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }\n\n"
+  end
+end
+
 console_puts('Running bundle install.')
 run "bundle install"
+
+inject_into_file 'config/application.rb', before: "  end" do
+  "\n    config.generators.assets = false\n\nconfig.generators.helper = false\n\nnconfig.generators.stylesheets = false"
+end
 
 def source_paths
   [File.expand_path(File.dirname(__FILE__))]
