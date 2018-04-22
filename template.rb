@@ -24,8 +24,8 @@ if yes?("Add Devise?")
   run "bundle install"
   run "rails generate devise:install"
   run "rails generate devise User"
-  inject_into_file 'config/environments/development.rb', before: "config.action_mailer.perform_caching" do
-    "\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }\n\n"
+  inject_into_file 'config/environments/development.rb', after: "config.action_mailer.perform_caching = false" do
+    "\n\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }\n\n"
   end
 end
 
@@ -33,34 +33,32 @@ console_puts('Running bundle install.')
 run "bundle install"
 
 inject_into_file 'config/application.rb', before: "  end" do
-  "\n    config.generators.assets = false \n\n config.generators.helper = false \n\n config.generators.stylesheets = false \n\n"
+  "\n    config.generators.assets = false \n\n    config.generators.helper = false \n\n    config.generators.stylesheets = false \n\n"
 end
 
 def source_paths
   [File.expand_path(File.dirname(__FILE__))]
 end
 
-after_bundle do
-  console_puts('Installing RSpec.')
-  generate "rspec:install"
+console_puts('Installing RSpec.')
+run "rails generate rspec:install"
 
-  console_puts('Converting view/layouts/application.html.erb HAML.')
-  generate "haml:application_layout convert"
-	run "rm app/views/layouts/application.html.erb"
+console_puts('Converting view/layouts/application.html.erb HAML.')
+generate "haml:application_layout convert"
+run "rm app/views/layouts/application.html.erb"
 
-  console_puts('Converting assets for Bootstrap.')
-  run "rm app/assets/stylesheets/application.css"
-  run "rm app/assets/javascript/application.js"
-  run "cp ../application.scss app/assets/stylesheets/application.scss"
-  run "cp ../application.js app/assets/javascripts/application.js"
+console_puts('Converting assets for Bootstrap.')
+run "rm app/assets/stylesheets/application.css"
+run "rm app/assets/javascript/application.js"
+run "curl https://github.com/lostphilosopher/rails_template/blob/master/application.scss > app/assets/stylesheets/application.scss"
+run "curl https://raw.githubusercontent.com/lostphilosopher/rails_template/master/application.js > app/assets/javascripts/application.js"
 
-  console_puts('Creating the database.')
-  rails_command "db:create"
+console_puts('Creating the database.')
+rails_command "db:create"
 
-  console_puts('Setting up Git.')
-	git :init
-  git add: "."
-  git commit: %Q{ -m 'Initial commit' }
+console_puts('Setting up Git.')
+git :init
+git add: "."
+git commit: %Q{ -m 'Initial commit' }
 
-  console_puts('Build complete, happy Rails-ing!')
-end
+console_puts('Build complete, happy Rails-ing!')
