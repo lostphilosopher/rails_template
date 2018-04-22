@@ -24,7 +24,7 @@ if yes?("Add Devise?")
   run "bundle install"
   run "rails generate devise:install"
   run "rails generate devise User"
-  inject_into_file 'config/environments/development.rb', before: "end" do
+  inject_into_file 'config/environments/development.rb', before: "config.action_mailer.perform_caching" do
     "\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }\n\n"
   end
 end
