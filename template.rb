@@ -16,6 +16,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem_group :development, :test do
 	gem 'rspec-rails', '~> 3.5.2'
   gem 'pry-rails', '~> 0.3.6'
+  gem "factory_girl", '4.8.1'
 end
 
 console_puts('Option: Devise')
@@ -50,11 +51,12 @@ run "rm app/views/layouts/application.html.erb"
 console_puts('Converting assets for Bootstrap.')
 run "rm app/assets/stylesheets/application.css"
 run "rm app/assets/javascript/application.js"
-run "curl https://github.com/lostphilosopher/rails_template/blob/master/application.scss > app/assets/stylesheets/application.scss"
+run "curl https://raw.githubusercontent.com/lostphilosopher/rails_template/master/application.scss > app/assets/stylesheets/application.scss"
 run "curl https://raw.githubusercontent.com/lostphilosopher/rails_template/master/application.js > app/assets/javascripts/application.js"
 
 console_puts('Creating the database.')
 rails_command "db:create"
+run "rake db:migrate"
 
 console_puts('Setting up Git.')
 git :init
